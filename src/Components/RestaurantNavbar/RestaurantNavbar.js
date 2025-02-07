@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../../UtilitiesComponents/Navbar'
 import { LogOut } from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCookie } from '../../utils/helper';
-import { setIsAuthenticate, setUserDetails } from '../../store/userSlice';
+import { setIsAuthenticate, setRestaurantDetails } from '../../store/userSlice';
 
 function RestaurantNavbar() {
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ function RestaurantNavbar() {
     removeCookie("auth")
     navigate(0)
     dispatch(setIsAuthenticate(false))
-    dispatch(setUserDetails({}))
+    dispatch(setRestaurantDetails({}))
   }
 
   return (

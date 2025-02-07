@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isAuthenticate: false,
-  userDetails: {},
+  restaurantDetails: {},
   isLoading: false
 }
 
@@ -13,8 +13,8 @@ export const userSlice = createSlice({
     setIsAuthenticate: (state, action) => {
       state.isAuthenticate = action.payload
     },
-    setUserDetails: (state, action) => {
-      state.userDetails = action.payload
+    setRestaurantDetails: (state, action) => {
+      state.restaurantDetails = action.payload
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
@@ -22,6 +22,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setIsAuthenticate, setUserDetails, setIsLoading } = userSlice.actions
+export const { setIsAuthenticate, setRestaurantDetails, setIsLoading } = userSlice.actions
 
 export default userSlice.reducer

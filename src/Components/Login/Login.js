@@ -4,7 +4,7 @@ import { login } from "../../APIService/auth";
 import { setCookies } from "../../utils/helper";
 import Button from "../../UtilitiesComponents/Button";
 import { useDispatch } from "react-redux";
-import { setIsAuthenticate } from "../../store/userSlice";
+import { setIsAuthenticate, setRestaurantDetails } from "../../store/userSlice";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -33,6 +33,7 @@ const Login = () => {
         if(response.accessToken) {
           setCookies("auth", response.accessToken)
           dispatch(setIsAuthenticate(true))
+          dispatch(setRestaurantDetails(response))
           navigate("/dashboard")
           toast.success("Login successful!")
         }
