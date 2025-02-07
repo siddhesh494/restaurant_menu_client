@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Login from '../Login'
 import Home from '../Home'
@@ -8,19 +8,17 @@ import Contact from '../Contact'
 import Browse from '../Browse'
 import Profile from '../Profile'
 import ViewMenu from '../ViewMenu'
-import AuthGuard from '../../Utilities/AuthGuard'
 import OpenNavbar from '../OpenNavbar'
 import ForgotPassword from '../ForgotPassword'
+import AuthGuard from '../../UtilitiesComponents/AuthGuard'
 
 function PageLayout() {
-
-  const [isAuthenticated, setIsAuthenticated] = useState(true)
 
   const appRouter = createBrowserRouter([
     {
       path: '/', /* it will have unprotected  */
       element: (
-        <OpenNavbar isAuthenticated={isAuthenticated}/>
+        <OpenNavbar />
       ),
       children: [
         { 
@@ -56,9 +54,7 @@ function PageLayout() {
     {
       path: '/dashboard', /* it will have unprotected  */
       element: (
-        <AuthGuard 
-          isAuthenticated = {isAuthenticated}
-        />
+        <AuthGuard />
       ),
       children: [
         { 

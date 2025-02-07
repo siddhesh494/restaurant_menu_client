@@ -1,14 +1,49 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../APIService/auth";
+import { setCookies } from "../../utils/helper";
+import Button from "../../UtilitiesComponents/Button";
+import { useDispatch } from "react-redux";
+import { setIsAuthenticate } from "../../store/userSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const [email, setEmail] = useState("sid2@gmail.com");
+  const [password, setPassword] = useState("1234567");
+  const [logginLoader, setLoginLoader] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Logging in with:", email, password);
+    loginRestaurant({
+      email: email,
+      password: password
+    })
   };
+
+  const loginRestaurant = async (body) =>{
+    setLoginLoader(true)
+    try {
+      if(email && password) {
+        const response = await login(body)
+        console.log("response", response)
+        if(response.accessToken) {
+          setCookies("auth", response.accessToken)
+          dispatch(setIsAuthenticate(true))
+          navigate("/dashboard")
+          toast.success("Login successful!")
+        }
+      }
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setLoginLoader(false)
+    }
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -51,12 +86,13 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button
+          <Button
             type="submit"
-            className="w-full bg-[#FF5722] text-white py-2 rounded-md hover:bg-[#E64A19] transition"
+            isLoading={logginLoader}
           >
             Login
-          </button>
+          </Button>
+          
         </form>
 
         {/* Register Link */}

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import Navbar from '../../Utilities/Navbar'
+import Navbar from '../../UtilitiesComponents/Navbar'
+import { useJWTVerification } from '../../Hooks/useJWTVerification'
 
 function OpenNavbar() {
+  useJWTVerification()
   return (
     <div>
-      <Navbar 
+      <Navbar
         leftLinks = {[
           {
             name: 'Home',

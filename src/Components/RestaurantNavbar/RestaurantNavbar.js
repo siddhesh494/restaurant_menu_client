@@ -1,9 +1,23 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import Navbar from '../../Utilities/Navbar'
-import { LogOut } from "lucide-react"; // Icons for mobile menu
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import Navbar from '../../UtilitiesComponents/Navbar'
+import { LogOut } from "lucide-react";
+import { useDispatch, useSelector } from 'react-redux';
+import { removeCookie } from '../../utils/helper';
+import { setIsAuthenticate, setUserDetails } from '../../store/userSlice';
 
-function RestaurantNavbar({isAuthenticated}) {
+function RestaurantNavbar() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const isAuthenticated = useSelector((item) => item.user.isAuthenticate)
+
+  const logoutUser = () => {
+    removeCookie("auth")
+    navigate(0)
+    dispatch(setIsAuthenticate(false))
+    dispatch(setUserDetails({}))
+  }
+
   return (
     <div>
       <Navbar
@@ -23,7 +37,7 @@ function RestaurantNavbar({isAuthenticated}) {
             component: <Link to="/dashboard/profile" className="text-[#FF5722] font-semibold">Profile</Link>
           },
           {
-            component: <LogOut color='#FF5722' className='cursor-pointer'/>
+            component: <LogOut color='#FF5722' onClick={logoutUser} className='cursor-pointer'/>
           }
         ]}
         rightMobileComponent = {[
@@ -31,7 +45,7 @@ function RestaurantNavbar({isAuthenticated}) {
             component: <Link to="/dashboard/profile" className="text-[#FF5722] font-semibold">Profile</Link>
           },
           {
-            component: <Link to="/" className="text-[#FF5722] font-semibold">Logout</Link>
+            component: <Link to="/" onClick={logoutUser} className="text-[#FF5722] font-semibold">Logout</Link>
           }
         ]}
       />
