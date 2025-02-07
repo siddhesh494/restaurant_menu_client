@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../../APIService/auth";
+import Button from "../../UtilitiesComponents/Button";
+import toast from "react-hot-toast";
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [registerLoader, setRegisterLoader] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,8 +19,28 @@ const Register = () => {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Registering with:", name, email, password);
+    registerNewRestaurant({
+      name,
+      email,
+      password
+    })
   };
+
+  const registerNewRestaurant = async (body) => {
+    setRegisterLoader(true)
+    try {
+      await register(body)
+      
+      toast.success("Registration successful! Redirecting to login...")
+      
+      navigate("/login")
+    } catch (error) {
+      console.log("Error:", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setRegisterLoader(false)
+    }
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -76,12 +102,13 @@ const Register = () => {
           </div>
 
           {/* Register Button */}
-          <button
+          <Button
             type="submit"
-            className="w-full bg-[#FF5722] text-white py-2 rounded-md hover:bg-[#E64A19] transition"
+            isLoading={registerLoader}
+            // size={'lg'}
           >
             Register
-          </button>
+          </Button>
         </form>
 
         {/* Login Link */}
