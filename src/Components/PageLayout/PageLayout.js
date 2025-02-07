@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Login from '../Login'
 import Home from '../Home'
 import Register from '../Register'
 import About from '../About/About'
 import Contact from '../Contact'
-import Navbar from '../../Utilities/Navbar'
 import Browse from '../Browse'
 import Profile from '../Profile'
 import ViewMenu from '../ViewMenu'
 import AuthGuard from '../../Utilities/AuthGuard'
+import OpenNavbar from '../OpenNavbar'
+import ForgotPassword from '../ForgotPassword'
 
 function PageLayout() {
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
 
   const appRouter = createBrowserRouter([
     {
       path: '/', /* it will have unprotected  */
       element: (
-        <Navbar />
+        <OpenNavbar isAuthenticated={isAuthenticated}/>
       ),
       children: [
         { 
@@ -33,6 +34,10 @@ function PageLayout() {
         {
           path: 'register',
           element: <Register />
+        },
+        {
+          path: 'forgotPassword',
+          element: <ForgotPassword />
         },
         {
           path:"home",
@@ -49,7 +54,7 @@ function PageLayout() {
       ]
     },
     {
-      path: '/restaurant', /* it will have unprotected  */
+      path: '/dashboard', /* it will have unprotected  */
       element: (
         <AuthGuard 
           isAuthenticated = {isAuthenticated}
@@ -66,7 +71,11 @@ function PageLayout() {
         },
         {
           path: "profile",
-          element: <Profile />,
+          element: <Profile />
+        }, 
+        {
+          path: "menu",
+          element: <Profile />
         }
       ]
     },
