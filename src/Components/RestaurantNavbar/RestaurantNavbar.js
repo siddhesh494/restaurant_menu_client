@@ -28,7 +28,7 @@ function RestaurantNavbar() {
             path: '/dashboard/home'
           },
           {
-            name: 'Menu',
+            name: 'Your Menu',
             path: '/dashboard/menu'
           }
         ]}
@@ -49,7 +49,6 @@ function RestaurantNavbar() {
           }
         ]}
       />
-      <Outlet />
     </div>
   )
 }

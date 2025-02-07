@@ -11,6 +11,7 @@ import ViewMenu from '../ViewMenu'
 import OpenNavbar from '../OpenNavbar'
 import ForgotPassword from '../ForgotPassword'
 import AuthGuard from '../../UtilitiesComponents/AuthGuard'
+import YourMenu from '../YourMenu'
 
 function PageLayout() {
 
@@ -71,7 +72,7 @@ function PageLayout() {
         }, 
         {
           path: "menu",
-          element: <Profile />
+          element: <YourMenu />
         }
       ]
     },
