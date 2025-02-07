@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
-import RestaurantNavbar from '../RestaurantNavbar';
+import RestaurantNavbar from '../../Components/RestaurantNavbar';
 
 function AuthGuard({
   isAuthenticated
@@ -8,7 +8,7 @@ function AuthGuard({
 
   return isAuthenticated ? (
     <>
-      <RestaurantNavbar />
+      <RestaurantNavbar isAuthenticated={isAuthenticated}/>
       <Outlet />
     </>
   ) : 
