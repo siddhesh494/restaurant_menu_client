@@ -30,6 +30,10 @@ function RestaurantNavbar() {
           {
             name: 'Your Menu',
             path: '/dashboard/menu'
+          },
+          {
+            name: 'Design Menu',
+            path: '/dashboard/menuDesign'
           }
         ]}
         rightComponents = {[

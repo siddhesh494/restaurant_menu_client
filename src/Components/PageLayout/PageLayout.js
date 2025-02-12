@@ -12,6 +12,7 @@ import OpenNavbar from '../OpenNavbar'
 import ForgotPassword from '../ForgotPassword'
 import AuthGuard from '../../UtilitiesComponents/AuthGuard'
 import YourMenu from '../YourMenu'
+import MenuDesign from '../MenuDesign'
 
 function PageLayout() {
 
@@ -73,6 +74,10 @@ function PageLayout() {
         {
           path: "menu",
           element: <YourMenu />
+        },
+        {
+          path: "menuDesign",
+          element: <MenuDesign />
         }
       ]
     },
