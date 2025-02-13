@@ -6,7 +6,9 @@ import DeleteIcon from '../../assests/PNG/delete.png'
 function Dish({
   dish,
   category,
-  removeDish
+  menuTitle,
+  setShowDeleteDishModal,
+  setSelectedDishForDelete
 }) {
   return (
     <div className='flex flex-row justify-between mx-4'>
@@ -38,6 +40,14 @@ function Dish({
             src={DeleteIcon}
             alt="DeleteIcon"
             className='cursor-pointer'
+            onClick={() => {
+              setShowDeleteDishModal(true)
+              setSelectedDishForDelete({
+                menuTitle: menuTitle,
+                category: category,
+                dishName: dish.dishName
+              })
+            }}
           />
         </div>
       </div>

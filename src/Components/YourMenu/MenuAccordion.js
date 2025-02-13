@@ -14,7 +14,10 @@ function MenuAccordion({
   onMenuToggle,
   removeDish,
   setMenus,
-  menus
+  menus,
+
+  setShowDeleteDishModal,
+  setSelectedDishForDelete,
 }) {
 
   const [addDishEnable, setAddDishEnable] = useState({})
@@ -79,8 +82,10 @@ function MenuAccordion({
                 return (
                   <Dish
                     dish={dish} 
-                    category={category} 
-                    removeDish={removeDish}
+                    category={category}
+                    menuTitle={menuTitle}
+                    setShowDeleteDishModal={setShowDeleteDishModal}
+                    setSelectedDishForDelete={setSelectedDishForDelete}
                   />
                 )
               })}

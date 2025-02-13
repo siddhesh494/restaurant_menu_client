@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Button from "../../UtilitiesComponents/Button";
 import Input from "../../UtilitiesComponents/Input";
-import { map } from "lodash";
+import { filter, map } from "lodash";
 import MenuAccordion from "./MenuAccordion";
+import Modal from "../../UtilitiesComponents/Modal";
 
 export default function YourMenu() {
+  const [showDeleteDishModal, setShowDeleteDishModal] = useState(false)
+  const [selectedDishForDelete, setSelectedDishForDelete] = useState({})
+
   const [addMenuEnable, setAddMenuEnable] = useState(false)
   const [newMenu, setNewMenu] = useState("")
   const [menus, setMenus] = useState({});
@@ -27,12 +31,42 @@ export default function YourMenu() {
     setAddMenuEnable(false)
   }
 
-  const removeDish = (category, dishIndex) => {
+  const removeDish = () => {
+    // console.log("selectedDishForDelete", selectedDishForDelete)
+    const { menuTitle, category, dishName } = selectedDishForDelete
+    const list = filter(menus[menuTitle].menuList[category], (dish) => {
+      if(dish.dishName === dishName) return false
+      return true
+    })
 
+    menus[menuTitle].menuList[category] = list
+    setMenus({...menus})
+    closeRemoveDishModal()
+  }
+  const closeRemoveDishModal = () => {
+    setShowDeleteDishModal(false)
+    setSelectedDishForDelete({})  
   }
 
 
   return (
+    <>
+    {/* delete dish modal */}
+    <Modal 
+      isOpen={showDeleteDishModal}
+      onClose={() =>{
+        closeRemoveDishModal()
+      }}
+      title="Do you want to delete this dish?"
+      onConfirm={() => {
+        removeDish()
+      }}
+    />
+
+    {/* delete category modal */}
+
+    {/* delete menu modal */}
+
     <div className="p-6 max-w-4xl mx-auto">
 
       {map(menus, (value, key) => {
@@ -44,6 +78,9 @@ export default function YourMenu() {
             removeDish={removeDish}
             setMenus={setMenus}
             menus={menus}
+
+            setShowDeleteDishModal={setShowDeleteDishModal}
+            setSelectedDishForDelete={setSelectedDishForDelete}
           />
         )
       })}
@@ -98,5 +135,6 @@ export default function YourMenu() {
       </div>
       
     </div>
+    </>
   );
 }
