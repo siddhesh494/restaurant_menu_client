@@ -34,6 +34,8 @@ function MenuAccordion({
   const [addCategoryEnable, setAddCategoryEnable] = useState(false)
   const [newFoodCategory, setNewFoodCategory] = useState("")
 
+  const [editCurrentCategory, setEditCurrentCategory] = useState(false)
+  const [editCategoryValue, setEditCategoryValue] = useState("")
 
   const disabledDish = () => {
     setAddDishEnable({})
@@ -66,6 +68,18 @@ function MenuAccordion({
     disabledCategory()
   }
 
+  const undoEditCategory = () => {
+    setEditCategoryValue("")
+    setEditCurrentCategory(false)
+  }
+
+  const saveEditCategory = (curCategory) => {
+    menus[menuTitle].menuList[editCategoryValue] = [...menus[menuTitle].menuList[curCategory]]
+    delete menus[menuTitle].menuList[curCategory]
+    setMenus({...menus})
+    undoEditCategory()
+  }
+
   return (
     <Accordion
       title = {menuTitle}
@@ -82,29 +96,71 @@ function MenuAccordion({
           return (
             <div className='p-2'>
               <div className='flex flex-row justify-between mb-3 mr-5'>
-                <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
-                <div className='flex flex-row gap-1'>
-                  <img 
-                    src={EditIcon}
-                    alt="EditIcon"
-                    className='cursor-pointer'
-                    onClick={() => {
-
-                    }}
-                  />
-                  <img 
-                    src={DeleteIcon}
-                    alt="DeleteIcon"
-                    className='cursor-pointer'
-                    onClick={() => {
-                      setSelectedCategoryForDelete({
-                        menuTitle: menuTitle,
-                        category: category
-                      })
-                      setShowDeleteCategoryConfirmation(true)
-                    }}
-                  />
-                </div>
+                {editCurrentCategory ? (
+                  <div className='flex flex-row justify-between mx-4 gap-2 mb-5'>
+                    <div className='w-[50%]'>
+                      <Input
+                        value={editCategoryValue}
+                        placeholder={"Food Category"}
+                        onChange={(e) => {
+                          setEditCategoryValue(e.target.value)
+                          // setNewFoodCategory(e.target.value)
+                        }}
+                      />
+                    </div>
+                    
+                    <div className='flex flex-row gap-2'>
+                      <Button
+                        size="sm"
+                        variant="blue"
+                        disabled={!editCategoryValue}
+                        onClick={() => {
+                          saveEditCategory(category)
+                          // handleAddNewCategory(menuTitle, newFoodCategory)
+                        }}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="red"
+                        onClick={() => {
+                          undoEditCategory()
+                        }}
+                      >
+                        Undo
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
+                    <div className='flex flex-row gap-1'>
+                      <img 
+                        src={EditIcon}
+                        alt="EditIcon"
+                        className='cursor-pointer'
+                        onClick={() => {
+                          setEditCategoryValue(category)
+                          setEditCurrentCategory(true)
+                        }}
+                      />
+                      <img 
+                        src={DeleteIcon}
+                        alt="DeleteIcon"
+                        className='cursor-pointer'
+                        onClick={() => {
+                          setSelectedCategoryForDelete({
+                            menuTitle: menuTitle,
+                            category: category
+                          })
+                          setShowDeleteCategoryConfirmation(true)
+                        }}
+                      />
+                    </div>
+                  </>
+                )}
+                
               </div>
               {map(list, (dish, index) => {
                 return (
