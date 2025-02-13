@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../UtilitiesComponents/Button";
 import Input from "../../UtilitiesComponents/Input";
 import { filter, map } from "lodash";
@@ -11,7 +11,21 @@ export default function YourMenu() {
 
   const [addMenuEnable, setAddMenuEnable] = useState(false)
   const [newMenu, setNewMenu] = useState("")
-  const [menus, setMenus] = useState({});
+  const [menus, setMenus] = useState({
+    Dining: {
+      isOpen: true,
+      menuList:{
+        Starter: [
+          {dishName: 'Chicken Lollipop', dishPrice: 1200, dishDescription: '', isVeg: false},
+          {dishName: 'Paneer', dishPrice: 142, dishDescription: '', isVeg: true}
+        ]
+      }
+    }
+  });
+
+  useEffect(() => {
+    console.log("menus", menus)
+  }, [menus])
 
   const toggleMenu = (menuType) => {
     menus[menuType].isOpen = !menus[menuType].isOpen

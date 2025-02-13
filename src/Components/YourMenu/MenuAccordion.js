@@ -9,10 +9,9 @@ import InputDish from './InputDish'
 import Input from '../../UtilitiesComponents/Input'
 
 function MenuAccordion({
-  menuItems, 
   menuTitle,
+  menuItems,
   onMenuToggle,
-  removeDish,
   setMenus,
   menus,
 
@@ -22,9 +21,9 @@ function MenuAccordion({
 
   const [addDishEnable, setAddDishEnable] = useState({})
   const [newDish, setNewDish] = useState({
-    name: "",
-    discription: "",
-    price: 0,
+    dishName: "",
+    dishDescription: "",
+    dishPrive: 0,
     isVeg: true
   })
   const [addCategoryEnable, setAddCategoryEnable] = useState(false)
@@ -34,9 +33,9 @@ function MenuAccordion({
   const disabledDish = () => {
     setAddDishEnable({})
     setNewDish({
-      name: "",
-      discription: "",
-      price: 0,
+      dishName: "",
+      dishDescription: "",
+      dishPrive: 0,
       isVeg: true
     })
   }
@@ -47,9 +46,9 @@ function MenuAccordion({
 
   const handleAddMenuItem = (menuName, category, dish) => {
     menus[menuName].menuList[category].push({
-      dishName: dish.name,
-      dishPrice: dish.price,
-      dishDescription: dish.discription,
+      dishName: dish.dishName,
+      dishPrice: dish.dishPrice,
+      dishDescription: dish.dishDescription,
       isVeg: dish.isVeg
     })
     setMenus({...menus})
@@ -78,12 +77,15 @@ function MenuAccordion({
           return (
             <div className='p-2'>
               <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
-              {map(list, (dish) => {
+              {map(list, (dish, index) => {
                 return (
                   <Dish
+                    index={index}
                     dish={dish} 
                     category={category}
                     menuTitle={menuTitle}
+                    menus={menus}
+                    setMenus={setMenus}
                     setShowDeleteDishModal={setShowDeleteDishModal}
                     setSelectedDishForDelete={setSelectedDishForDelete}
                   />
@@ -98,7 +100,7 @@ function MenuAccordion({
                     disabledDish={disabledDish}
                     category={category}
                     menuTitle={menuTitle}
-                    handleAddMenuItem={handleAddMenuItem}
+                    handleAddEditMenuItem={handleAddMenuItem}
                   />
                 </div> : null
               }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../../UtilitiesComponents/Input'
 import Textarea from '../../UtilitiesComponents/TextArea'
 import Button from '../../UtilitiesComponents/Button'
@@ -10,29 +10,38 @@ function InputDish({
   newDish,
   setNewDish,
   disabledDish,
-  handleAddMenuItem,
+  handleAddEditMenuItem,
   category,
   menuTitle
 }) {
+  const [dishValue, setDishValue] = useState({...newDish})
+  useEffect(() => {
+    setDishValue({...newDish})
+  }, [newDish])
+
   return (
     <div className='flex flex-row justify-between mx-4 gap-2'>
       <div className='flex flex-col gap-1'>
         <Input 
-          value={newDish.name}
+          value={dishValue.dishName}
           placeholder={"Dish name"}
           onChange={(e) => {
-            setNewDish((prev) => ({...prev, name: e.target.value}) )
+            dishValue.dishName = e.target.value
+            setDishValue({...dishValue})
+            // setDishValue((prev) => ({...prev, dishName: e.target.value}) )
           }}
         />
         <Textarea 
-          value={newDish.discription}
+          value={dishValue.dishDescription}
           placeholder={"Dish Discription"}
           onChange={(e) => {
-            setNewDish((prev) => ({...prev, discription: e.target.value}) )
+            dishValue.dishDescription = e.target.value
+            setDishValue({...dishValue})
+            // setDishValue((prev) => ({...prev, dishDescription: e.target.value}) )
           }}
           className='border border-black rounded-md'
         />
-        <p className={`font-thin text-xs text-right ${newDish.discription.length > 100 ? 'text-red-600 font-normal' : ''}`}>Max 100 words</p>
+        <p className={`font-thin text-xs text-right ${dishValue.dishDescription.length > 100 ? 'text-red-600 font-normal' : ''}`}>Max 100 words</p>
         <div className='flex flex-row gap-1 items-center'>
           <div>
             <img 
@@ -42,9 +51,11 @@ function InputDish({
             />
           </div>
           <Switch 
-            checked={newDish.isVeg}
+            checked={dishValue.isVeg}
             onCheckedChange={()=> {
-              setNewDish((prev) => ({...prev, isVeg: !prev.isVeg}) )
+              dishValue.isVeg = !dishValue.isVeg
+              setDishValue({...dishValue})
+              // setDishValue((prev) => ({...prev, isVeg: !prev.isVeg}) )
             }}
           />
           <div>
@@ -63,11 +74,13 @@ function InputDish({
       <div className='flex flex-col gap-2 items-center'>
         <div>
           <Input 
-            value={newDish.price}
+            value={dishValue.dishPrice}
             type='number'
             placeholder={"Dish Price"}
             onChange={(e) => {
-              setNewDish((prev) => ({...prev, price: +e.target.value}) )
+              dishValue.dishPrice = e.target.value
+              setDishValue({...dishValue})
+              // setDishValue((prev) => ({...prev, dishPrice: +e.target.value}) )
             }}
           />
         </div>
@@ -75,9 +88,9 @@ function InputDish({
           <Button
             size="sm"
             variant="blue"
-            disabled={!(newDish.name && newDish.price && newDish.discription.length <= 100)}
+            disabled={!(dishValue.dishName && dishValue.dishPrice && dishValue.dishDescription.length <= 100)}
             onClick={() => {
-              handleAddMenuItem(menuTitle, category, newDish)
+              handleAddEditMenuItem(menuTitle, category, dishValue)
             }}
           >
             Save
