@@ -7,6 +7,8 @@ import Dish from './Dish'
 import Button from '../../UtilitiesComponents/Button'
 import InputDish from './InputDish'
 import Input from '../../UtilitiesComponents/Input'
+import DeleteIcon from '../../assests/PNG/delete.png'
+import EditIcon from '../../assests/PNG/edit.png'
 
 function MenuAccordion({
   menuTitle,
@@ -17,6 +19,9 @@ function MenuAccordion({
 
   setShowDeleteDishModal,
   setSelectedDishForDelete,
+
+  setShowDeleteCategoryConfirmation,
+  setSelectedCategoryForDelete
 }) {
 
   const [addDishEnable, setAddDishEnable] = useState({})
@@ -76,7 +81,31 @@ function MenuAccordion({
         {map(menuItems.menuList, (list, category) => {
           return (
             <div className='p-2'>
-              <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
+              <div className='flex flex-row justify-between mb-3 mr-5'>
+                <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
+                <div className='flex flex-row gap-1'>
+                  <img 
+                    src={EditIcon}
+                    alt="EditIcon"
+                    className='cursor-pointer'
+                    onClick={() => {
+
+                    }}
+                  />
+                  <img 
+                    src={DeleteIcon}
+                    alt="DeleteIcon"
+                    className='cursor-pointer'
+                    onClick={() => {
+                      setSelectedCategoryForDelete({
+                        menuTitle: menuTitle,
+                        category: category
+                      })
+                      setShowDeleteCategoryConfirmation(true)
+                    }}
+                  />
+                </div>
+              </div>
               {map(list, (dish, index) => {
                 return (
                   <Dish
@@ -91,6 +120,8 @@ function MenuAccordion({
                   />
                 )
               })}
+
+              {/* add new dish input section */}
               {
                 addDishEnable && addDishEnable[category] ?
                 <div className='my-5'>

@@ -9,6 +9,9 @@ export default function YourMenu() {
   const [showDeleteDishModal, setShowDeleteDishModal] = useState(false)
   const [selectedDishForDelete, setSelectedDishForDelete] = useState({})
 
+  const [showDeleteCategoryConfirmation, setShowDeleteCategoryConfirmation] = useState(false)
+  const [selectedCategoryForDelete, setSelectedCategoryForDelete] = useState({})
+
   const [addMenuEnable, setAddMenuEnable] = useState(false)
   const [newMenu, setNewMenu] = useState("")
   const [menus, setMenus] = useState({
@@ -46,7 +49,6 @@ export default function YourMenu() {
   }
 
   const removeDish = () => {
-    // console.log("selectedDishForDelete", selectedDishForDelete)
     const { menuTitle, category, dishName } = selectedDishForDelete
     const list = filter(menus[menuTitle].menuList[category], (dish) => {
       if(dish.dishName === dishName) return false
@@ -60,6 +62,18 @@ export default function YourMenu() {
   const closeRemoveDishModal = () => {
     setShowDeleteDishModal(false)
     setSelectedDishForDelete({})  
+  }
+
+  // category handle
+  const closeRemoveCategoryModal = () => {
+    setShowDeleteCategoryConfirmation(false)
+    setSelectedCategoryForDelete({})
+  }
+  const removeCategory = () => {
+    const { menuTitle, category  } = selectedCategoryForDelete
+    delete menus[menuTitle].menuList[category]
+    setMenus({...menus})
+    closeRemoveCategoryModal()
   }
 
 
@@ -78,6 +92,16 @@ export default function YourMenu() {
     />
 
     {/* delete category modal */}
+    <Modal 
+      isOpen={showDeleteCategoryConfirmation}
+      onClose={() =>{
+        closeRemoveCategoryModal()
+      }}
+      title="Do you want to delete this Category?"
+      onConfirm={() => {
+        removeCategory()
+      }}
+    />
 
     {/* delete menu modal */}
 
@@ -95,6 +119,9 @@ export default function YourMenu() {
 
             setShowDeleteDishModal={setShowDeleteDishModal}
             setSelectedDishForDelete={setSelectedDishForDelete}
+
+            setShowDeleteCategoryConfirmation={setShowDeleteCategoryConfirmation}
+            setSelectedCategoryForDelete={setSelectedCategoryForDelete}
           />
         )
       })}
