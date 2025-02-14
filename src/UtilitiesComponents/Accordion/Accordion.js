@@ -1,5 +1,6 @@
 import React from 'react'
 import './Accordion.css'
+import DeleteIcon from '../../assests/PNG/delete.png'
 
 const Accordion = (props) => {
   
@@ -16,11 +17,22 @@ const Accordion = (props) => {
         <span
           className={props.classes?.accordionTitle || `accordion-title-style`}
         >{props.title}</span>
-        <span
-          className={props.classes?.accordionIcon || `accordion-icon-style`}
-        >
-          {props.isOpen ? '\u2212': '\u002B'}
-        </span>
+        <div className='flex flex-row gap-4'>
+          {props.showDelete ? <img 
+            src={DeleteIcon}
+            alt="DeleteIcon"
+            className='cursor-pointer brightness-0 invert '
+            onClick={() => {
+              props.onDelete && props.onDelete()
+              props.handleOnClick()
+            }}
+          /> : null}
+          <span
+            className={props.classes?.accordionIcon || `accordion-icon-style`}
+          >
+            {props.isOpen ? '\u2212': '\u002B'}
+          </span>
+        </div>
       </div>
       
       {props.isOpen && (

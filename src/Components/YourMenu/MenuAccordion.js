@@ -21,7 +21,10 @@ function MenuAccordion({
   setSelectedDishForDelete,
 
   setShowDeleteCategoryConfirmation,
-  setSelectedCategoryForDelete
+  setSelectedCategoryForDelete,
+
+  setShowDeleteMenuConfirmation,
+  setSelectedMenuForDelete,
 }) {
 
   const [addDishEnable, setAddDishEnable] = useState({})
@@ -82,6 +85,11 @@ function MenuAccordion({
 
   return (
     <Accordion
+      showDelete={true}
+      onDelete={() => {
+        setSelectedMenuForDelete(menuTitle)
+        setShowDeleteMenuConfirmation(true)
+      }}
       title = {menuTitle}
       isOpen={menuItems.isOpen}
       classes={{

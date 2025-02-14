@@ -12,6 +12,9 @@ export default function YourMenu() {
   const [showDeleteCategoryConfirmation, setShowDeleteCategoryConfirmation] = useState(false)
   const [selectedCategoryForDelete, setSelectedCategoryForDelete] = useState({})
 
+  const [showDeleteMenuConfirmation, setShowDeleteMenuConfirmation] = useState(false)
+  const [selectedMenuForDelete, setSelectedMenuForDelete] = useState("")
+
   const [addMenuEnable, setAddMenuEnable] = useState(false)
   const [newMenu, setNewMenu] = useState("")
   const [menus, setMenus] = useState({
@@ -76,6 +79,15 @@ export default function YourMenu() {
     closeRemoveCategoryModal()
   }
 
+  // menu handle
+  const closeRemoveMenuModal = () => {
+    setShowDeleteMenuConfirmation(false)
+    setSelectedMenuForDelete("")
+  }
+  const removeMenu = () => {
+    delete menus[selectedMenuForDelete]
+    closeRemoveMenuModal()
+  }
 
   return (
     <>
@@ -104,6 +116,16 @@ export default function YourMenu() {
     />
 
     {/* delete menu modal */}
+    <Modal 
+      isOpen={showDeleteMenuConfirmation}
+      onClose={() =>{
+        closeRemoveMenuModal()
+      }}
+      title="Do you want to delete this Menu?"
+      onConfirm={() => {
+        removeMenu()
+      }}
+    />
 
     <div className="p-6 max-w-4xl mx-auto">
 
@@ -122,6 +144,9 @@ export default function YourMenu() {
 
             setShowDeleteCategoryConfirmation={setShowDeleteCategoryConfirmation}
             setSelectedCategoryForDelete={setSelectedCategoryForDelete}
+
+            setShowDeleteMenuConfirmation={setShowDeleteMenuConfirmation}
+            setSelectedMenuForDelete={setSelectedMenuForDelete}
           />
         )
       })}
