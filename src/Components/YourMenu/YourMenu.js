@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import Button from "../../UtilitiesComponents/Button";
 import Input from "../../UtilitiesComponents/Input";
-import { filter, map } from "lodash";
+import { filter, forEach, map } from "lodash";
 import MenuAccordion from "./MenuAccordion";
 import Modal from "../../UtilitiesComponents/Modal";
+import { getMenuDetails, updateMenuDetails } from "../../APIService/menu";
+import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 export default function YourMenu() {
+
+  const [isGetLoading, setIsGetLoading] = useState(false)
+  const [isSaveLoading, setIsSaveLoading] = useState(false)
+
   const [showDeleteDishModal, setShowDeleteDishModal] = useState(false)
   const [selectedDishForDelete, setSelectedDishForDelete] = useState({})
 
@@ -17,21 +24,87 @@ export default function YourMenu() {
 
   const [addMenuEnable, setAddMenuEnable] = useState(false)
   const [newMenu, setNewMenu] = useState("")
-  const [menus, setMenus] = useState({
-    Dining: {
-      isOpen: true,
-      menuList:{
-        Starter: [
-          {dishName: 'Chicken Lollipop', dishPrice: 1200, dishDescription: '', isVeg: false},
-          {dishName: 'Paneer', dishPrice: 142, dishDescription: '', isVeg: true}
-        ]
-      }
-    }
-  });
+  const [menus, setMenus] = useState({});
 
   useEffect(() => {
-    console.log("menus", menus)
-  }, [menus])
+    getMenu()
+  }, [])
+
+  const getMenu = async () => {
+    setIsGetLoading(true)
+    try {
+      const response = await getMenuDetails({})
+      if(response) {
+        const menuList = {}
+        forEach(response, (menu) => {
+          menuList[menu.menuName] = {
+            isOpen: true,
+            menuList: {}
+          }
+          forEach(menu.menuItems, (category) => {
+            menuList[menu.menuName].menuList[category.categoryName] = []
+
+            forEach(category.categoryItems, (dish) => {
+              menuList[menu.menuName].menuList[category.categoryName].push({
+                dishName: dish.dishName, 
+                dishPrice: dish.price, 
+                dishDescription: dish.dishDescription, 
+                isVeg: dish.isVeg
+              })
+            })
+          })
+
+
+        })
+
+        setMenus({...menuList})
+      }
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setIsGetLoading(false)
+    }
+  }
+
+  const updateMenu = async () => {
+    setIsSaveLoading(true)
+    try {
+      const body = {
+        menuDetails: []
+      }
+      forEach(menus, (menuVal, menuName) => {
+        const m = {
+          menuName: menuName,
+          menuItems: []
+        }
+        forEach(menuVal.menuList, (categoryVal, categoryName) => {
+          const curCategory = {
+            categoryName: categoryName,
+            categoryItems: []
+          }
+          forEach(categoryVal, (dish) => {
+            curCategory.categoryItems.push({
+              dishName: dish.dishName,
+              price: dish.dishPrice,
+              isVeg: dish.isVeg,
+              dishDescription: dish.dishDescription || null
+            })
+          })
+          m.menuItems.push(curCategory)
+        })
+        body.menuDetails.push(m)
+      })
+      await updateMenuDetails(body)
+      toast.success("Menu updated successfully!")
+
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setIsSaveLoading(false)
+    }
+  }
 
   const toggleMenu = (menuType) => {
     menus[menuType].isOpen = !menus[menuType].isOpen
@@ -127,31 +200,59 @@ export default function YourMenu() {
       }}
     />
 
+
     <div className="p-6 max-w-4xl mx-auto">
+      <div className='w-1/2 flex flex-row gap-2 ml-auto'>
+        <Button
+          size="md"
+          variant="blue"
+          isLoading={isSaveLoading}
+          onClick={() => {
+            updateMenu()
+          }}
+        >
+          Save
+        </Button>
+        <Button
+          size="md"
+          variant="red"
+          disabled={isSaveLoading}
+          onClick={() => {
+            getMenu()
+          }}
+        >
+          Undo
+        </Button>
+      </div>
 
-      {map(menus, (value, key) => {
-        return (
-          <MenuAccordion
-            menuTitle={key}
-            menuItems={value}
-            onMenuToggle={toggleMenu}
-            removeDish={removeDish}
-            setMenus={setMenus}
-            menus={menus}
+      {isGetLoading ? (
+        <div className="mt-10 flex items-center justify-center h-full w-full">
+          <Loader2 className="h-10 w-10 text-[#FF5722] animate-spin" />
+        </div>
+      ) : (
+        map(menus, (value, key) => {
+          return (
+            <MenuAccordion
+              menuTitle={key}
+              menuItems={value}
+              onMenuToggle={toggleMenu}
+              removeDish={removeDish}
+              setMenus={setMenus}
+              menus={menus}
 
-            setShowDeleteDishModal={setShowDeleteDishModal}
-            setSelectedDishForDelete={setSelectedDishForDelete}
+              setShowDeleteDishModal={setShowDeleteDishModal}
+              setSelectedDishForDelete={setSelectedDishForDelete}
 
-            setShowDeleteCategoryConfirmation={setShowDeleteCategoryConfirmation}
-            setSelectedCategoryForDelete={setSelectedCategoryForDelete}
+              setShowDeleteCategoryConfirmation={setShowDeleteCategoryConfirmation}
+              setSelectedCategoryForDelete={setSelectedCategoryForDelete}
 
-            setShowDeleteMenuConfirmation={setShowDeleteMenuConfirmation}
-            setSelectedMenuForDelete={setSelectedMenuForDelete}
-          />
-        )
-      })}
-      
-      <hr  className='py-2'/>
+              setShowDeleteMenuConfirmation={setShowDeleteMenuConfirmation}
+              setSelectedMenuForDelete={setSelectedMenuForDelete}
+            />
+          )
+        })
+      )}
+      {!isGetLoading && <hr  className='py-2'/>}
 
       {/* add menu section */}
       {addMenuEnable ? (

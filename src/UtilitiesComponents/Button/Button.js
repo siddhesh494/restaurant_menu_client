@@ -21,6 +21,7 @@ const Button = ({
   const variantClasses = {
     primary: "bg-[#FF5722] text-white hover:bg-[#e64a19]",
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+    bluePrimary: "bg-[#1E88E5] text-white hover:bg-[#1E88E5]",
     blue: "border border-[#1E88E5] text-[#1E88E5] hover:bg-[#1E88E5] hover:text-white",
     red: "border border-[#FF5722] text-[#FF5722] hover:bg-[#FF5722] hover:text-white"
   };

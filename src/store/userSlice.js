@@ -14,6 +14,8 @@ export const userSlice = createSlice({
       state.isAuthenticate = action.payload
     },
     setRestaurantDetails: (state, action) => {
+      delete action.payload.accessToken
+      delete action.payload.refreshToken
       state.restaurantDetails = action.payload
     },
     setIsLoading: (state, action) => {

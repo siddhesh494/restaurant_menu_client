@@ -41,7 +41,7 @@ function InputDish({
           }}
           className='border border-black rounded-md'
         />
-        <p className={`font-thin text-xs text-right ${dishValue.dishDescription.length > 100 ? 'text-red-600 font-normal' : ''}`}>Max 100 words</p>
+        <p className={`font-thin text-xs text-right ${dishValue.dishDescription && dishValue.dishDescription.length > 100 ? 'text-red-600 font-normal' : ''}`}>Max 100 words</p>
         <div className='flex flex-row gap-1 items-center'>
           <div>
             <img 
@@ -88,7 +88,7 @@ function InputDish({
           <Button
             size="sm"
             variant="blue"
-            disabled={!(dishValue.dishName && dishValue.dishPrice && dishValue.dishDescription.length <= 100)}
+            disabled={!(dishValue.dishName && dishValue.dishPrice && (dishValue.dishDescription && dishValue.dishDescription.length <= 100))}
             onClick={() => {
               handleAddEditMenuItem(menuTitle, category, dishValue)
             }}

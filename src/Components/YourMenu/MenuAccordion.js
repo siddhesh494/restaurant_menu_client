@@ -37,7 +37,7 @@ function MenuAccordion({
   const [addCategoryEnable, setAddCategoryEnable] = useState(false)
   const [newFoodCategory, setNewFoodCategory] = useState("")
 
-  const [editCurrentCategory, setEditCurrentCategory] = useState(false)
+  const [editCurrentCategory, setEditCurrentCategory] = useState({})
   const [editCategoryValue, setEditCategoryValue] = useState("")
 
   const disabledDish = () => {
@@ -73,7 +73,7 @@ function MenuAccordion({
 
   const undoEditCategory = () => {
     setEditCategoryValue("")
-    setEditCurrentCategory(false)
+    setEditCurrentCategory({})
   }
 
   const saveEditCategory = (curCategory) => {
@@ -104,7 +104,7 @@ function MenuAccordion({
           return (
             <div className='p-2'>
               <div className='flex flex-row justify-between mb-3 mr-5'>
-                {editCurrentCategory ? (
+                {editCurrentCategory[category] ? (
                   <div className='flex flex-row justify-between mx-4 gap-2 mb-5'>
                     <div className='w-[50%]'>
                       <Input
@@ -150,7 +150,9 @@ function MenuAccordion({
                         className='cursor-pointer'
                         onClick={() => {
                           setEditCategoryValue(category)
-                          setEditCurrentCategory(true)
+                          setEditCurrentCategory({
+                            [category]: true 
+                          })
                         }}
                       />
                       <img 

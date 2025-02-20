@@ -17,7 +17,6 @@ export const useJWTVerification = ( ) => {
     dispatch(setIsLoading(true))
     try {
       const response = await verifyJWTToken()
-      console.log(response)
       if(response) {
         dispatch(setIsAuthenticate(true))
         dispatch(setRestaurantDetails(response))
