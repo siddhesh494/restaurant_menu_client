@@ -88,7 +88,7 @@ function InputDish({
           <Button
             size="sm"
             variant="blue"
-            disabled={!(dishValue.dishName && dishValue.dishPrice && (dishValue.dishDescription && dishValue.dishDescription.length <= 100))}
+            disabled={!(dishValue.dishName && dishValue.dishPrice && ((dishValue.dishDescription && dishValue.dishDescription.length <= 100) || !dishValue.dishDescription))}
             onClick={() => {
               handleAddEditMenuItem(menuTitle, category, dishValue)
             }}

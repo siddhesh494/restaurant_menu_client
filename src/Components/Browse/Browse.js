@@ -1,20 +1,33 @@
-import { Download, Eye, LogOut, Menu, QrCode, Settings } from 'lucide-react'
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Download } from 'lucide-react'
+import React from 'react'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 
 function Browse() {
   const navigate = useNavigate();
-  const [menuViews, setMenuViews] = useState(124); // Example count
+  // const [menuViews, setMenuViews] = useState(124); // Example count
+  const restaurantDetail = useSelector(store => store.user.restaurantDetails)
 
-  const downloadQR = () => {
-    const qrUrl = "https://your-qr-image-url.com/qr.png"; // Replace with dynamic QR URL
-    const link = document.createElement("a");
-    link.href = qrUrl;
-    link.download = "Restaurant-Menu-QR.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const downloadQR = async () => {
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=http://192.168.1.36:3000/viewMenu/${restaurantDetail.restaurantID}&format=png`; // Dynamic format
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `Restaurant-Menu-QR.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clean up memory
+      URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+      console.error("Error downloading QR code:", error);
+  }
+};
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -26,7 +39,7 @@ function Browse() {
         {/* First Row: View Menu & Download QR */}
         <div className="flex gap-4 mb-6 mt-6">
           <button
-            onClick={() => window.open(`/viewMenu/21212`, "_blank")}
+            onClick={() => window.open(`/viewMenu/${restaurantDetail?.restaurantID}`, "_blank")}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
           >
             View Menu
@@ -46,10 +59,10 @@ function Browse() {
         </div>
 
         {/* Second Row: Menu Views */}
-        <div className="flex items-center bg-white p-4 rounded-lg shadow-md">
+        {/* <div className="flex items-center bg-white p-4 rounded-lg shadow-md">
           <Eye size={24} className="text-gray-600 mr-3" />
           <p className="text-lg font-medium">Total Menu Views: <span className="text-blue-600 font-bold">{menuViews}</span></p>
-        </div>
+        </div> */}
       </main>
     </div>
   )

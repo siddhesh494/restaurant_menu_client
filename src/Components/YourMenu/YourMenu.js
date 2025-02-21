@@ -7,8 +7,11 @@ import Modal from "../../UtilitiesComponents/Modal";
 import { getMenuDetails, updateMenuDetails } from "../../APIService/menu";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export default function YourMenu() {
+
+  const restaurantDetail = useSelector(store => store.user.restaurantDetails)
 
   const [isGetLoading, setIsGetLoading] = useState(false)
   const [isSaveLoading, setIsSaveLoading] = useState(false)
@@ -27,13 +30,15 @@ export default function YourMenu() {
   const [menus, setMenus] = useState({});
 
   useEffect(() => {
-    getMenu()
-  }, [])
+    restaurantDetail.restaurantID && getMenu(restaurantDetail.restaurantID)
+  }, [restaurantDetail])
 
-  const getMenu = async () => {
+  const getMenu = async (restaurantID) => {
     setIsGetLoading(true)
     try {
-      const response = await getMenuDetails({})
+      const response = await getMenuDetails({
+        restaurantID: restaurantID
+      })
       if(response) {
         const menuList = {}
         forEach(response, (menu) => {
