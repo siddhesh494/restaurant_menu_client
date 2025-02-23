@@ -6,15 +6,17 @@ import { useJWTVerification } from '../../Hooks/useJWTVerification';
 
 function AuthGuard() {
   const isAuthenticated = useSelector((item) => item.user.isAuthenticate)
-  useJWTVerification()
-  
+  useJWTVerification(window.location.pathname)
+  // const isLoading = useSelector((item) => item.user.isLoading)
+  // const currentPath = window.location.pathname
+
+  // console.log("currentPath", currentPath)
   return isAuthenticated ? (
     <>
       <RestaurantNavbar />
       <Outlet />
     </>
-  ) : 
-  <Navigate to="/home" replace />;
+  ) : <Navigate to="/home" replace />;
 }
 
 export default AuthGuard

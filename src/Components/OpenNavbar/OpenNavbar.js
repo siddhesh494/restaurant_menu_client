@@ -24,10 +24,10 @@ function OpenNavbar() {
         ]}
         rightComponents = {[
           {
-            component: <Link to="/login" className="text-[#FF5722] font-semibold">Login</Link>
+            component: <Link to="/login" key = "login" className="text-[#FF5722] font-semibold">Login</Link>
           },
           {
-            component: <Link to="/register" className="text-[#FF5722] font-semibold">Register</Link>
+            component: <Link to="/register" key="register" className="text-[#FF5722] font-semibold">Register</Link>
           }
         ]}
       />

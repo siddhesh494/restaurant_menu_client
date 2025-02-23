@@ -21,7 +21,7 @@ const Navbar = ({
               ScanToDine
             </Link>
             <div className="hidden md:flex space-x-6">
-              {leftLinks.map((item) => <Link to={`${item.path}`} className="text-gray-700 hover:text-[#FF5722]">{item.name}</Link>)}
+              {leftLinks.map((item, ind) => <Link key={ind} to={`${item.path}`} className="text-gray-700 hover:text-[#FF5722]">{item.name}</Link>)}
             </div>
           </div>
 
@@ -42,7 +42,7 @@ const Navbar = ({
         {/* Mobile Dropdown Menu */}
         {isOpen && (
           <div className="md:hidden flex flex-col space-y-2 py-2">
-            {leftLinks.map((item) => <Link to={`${item.path}`} className="text-gray-700 hover:text-[#FF5722]">{item.name}</Link>)}
+            {leftLinks.map((item, ind) => <Link key={ind} to={`${item.path}`}  className="text-gray-700 hover:text-[#FF5722]">{item.name}</Link>)}
 
             <hr className="border-gray-300" />
             {rightMobileComponent && !isEmpty(rightMobileComponent) ? (

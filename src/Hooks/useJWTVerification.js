@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { verifyJWTToken } from "../APIService/auth"
 import { setIsAuthenticate, setIsLoading, setRestaurantDetails } from "../store/userSlice"
+import { PROTECTED_ROUTE } from "../utils/constant"
 
 
-export const useJWTVerification = ( ) => {
+export const useJWTVerification = ( pathname) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -20,7 +21,13 @@ export const useJWTVerification = ( ) => {
       if(response) {
         dispatch(setIsAuthenticate(true))
         dispatch(setRestaurantDetails(response))
-        navigate('/dashboard/home')
+        console.log("window.location.pathname", pathname)
+        if(PROTECTED_ROUTE.indexOf(pathname) > -1) {
+          navigate(pathname)
+        } else {
+          navigate('/dashboard/home')
+          
+        }
       }
     } catch (error) {
       
