@@ -11,8 +11,8 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [email, setEmail] = useState("testMenu@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("siddhesh.ss26@gmail.com");
+  const [password, setPassword] = useState("1234567");
   const [logginLoader, setLoginLoader] = useState(false)
 
   const handleSubmit = (e) => {

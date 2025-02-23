@@ -1,13 +1,37 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "../../UtilitiesComponents/Button";
+import toast from "react-hot-toast";
+import { forgotPassword } from "../../APIService/auth";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Password reset link sent to:", email);
   };
+
+  const handleForgotPassword = async () => {
+    setIsLoading(true)
+    try {
+      if(email) {
+        const response = await forgotPassword({
+          email: email
+        })
+        console.log("response", response)
+        toast.success(`Success: ${response}`)
+        setEmail("")
+      }
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setIsLoading(false)
+    }
+  } 
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -34,12 +58,16 @@ const ForgotPassword = () => {
           </div>
 
           {/* Submit Button */}
-          <button
+          <Button
             type="submit"
-            className="w-full bg-[#FF5722] text-white py-2 rounded-md hover:bg-[#E64A19] transition"
+            isLoading={isLoading}
+            disabled={!email}
+            onClick={() => {
+              handleForgotPassword()
+            }}
           >
             Send Reset Link
-          </button>
+          </Button>
         </form>
 
         {/* Back to Login */}
