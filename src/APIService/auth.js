@@ -1,4 +1,4 @@
-import { FORGOT_PASSWORD, LOGIN, REGISTER, VERIFY_JWT_TOKEN } from '../utils/apiEndPoint';
+import { FORGOT_PASSWORD, LOGIN, REGISTER, VERIFY_EMAIL, VERIFY_JWT_TOKEN } from '../utils/apiEndPoint';
 import { removeCookie } from '../utils/helper';
 import { instance } from './helper';
 
@@ -21,6 +21,11 @@ export const login = async (body) => {
 
 export const forgotPassword = async (body) => {
   const result = await instance.post(FORGOT_PASSWORD, body, {})
+  return result.data && result.data.message
+}
+
+export const verifyEmail = async (body) => {
+  const result = await instance.post(VERIFY_EMAIL, body, {})
   return result.data && result.data.message
 }
 

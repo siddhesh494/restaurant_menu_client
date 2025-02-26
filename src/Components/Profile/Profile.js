@@ -5,10 +5,12 @@ import { Textarea } from '../../UtilitiesComponents/TextArea/TextArea'
 import Button from '../../UtilitiesComponents/Button/Button'
 import toast from 'react-hot-toast'
 import { getRestaurantDetails, updateRestaurantDetails } from '../../APIService/restaurant'
+import { verifyEmail } from '../../APIService/auth'
 
 function Profile() {
 
   const restaurantDetails = useSelector((store) => store.user.restaurantDetails)
+  const [isSaveLoading, setIsSaveLoading] = useState(false)
   const [restaurantName, setRestaurantName] = useState("")
   const [restaurantEmail, setRestaurantEmail] = useState("")
   const [restaurantAddress, setRestaurantAddress] = useState("")
@@ -17,9 +19,19 @@ function Profile() {
     if(restaurantDetails.restaurantID) getProfileDetails()
   }, [restaurantDetails])
 
-  const handleUpdateProfiledetails = async () => {
+  const verifyEmailFn = async () => {
     try {
-      console.log("restaurantAddress", restaurantAddress)
+      await verifyEmail()
+      
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    }
+  }
+
+  const handleUpdateProfiledetails = async () => {
+    setIsSaveLoading(true)
+    try {
       const response = await updateRestaurantDetails({
         name: restaurantName,
         address: restaurantAddress
@@ -30,6 +42,8 @@ function Profile() {
     } catch (error) {
       console.log("error", error)
       toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setIsSaveLoading(false)
     }
   }
 
@@ -70,7 +84,7 @@ function Profile() {
         <div className="flex-1">
           <div className='flex flex-row justify-between'>
             <label className="block text-gray-700 font-semibold mb-1">Email</label>
-            <p className='text-blue-500 underline cursor-pointer'>Verify</p>
+            {!restaurantDetails.isEmailVerified ? <p className='text-blue-500 underline cursor-pointer' onClick={verifyEmailFn}>Verify</p> : null}
           </div>
           <Input 
             type="email" 
@@ -102,7 +116,14 @@ function Profile() {
       </div>
 
       <div className="flex justify-end mt-6">
-        <Button size="md" variant="primary" onClick={handleUpdateProfiledetails}>Save Changes</Button>
+        <Button 
+          size="md" 
+          variant="primary" 
+          onClick={handleUpdateProfiledetails}
+          isLoading={isSaveLoading}
+        >
+          Save Changes
+        </Button>
       </div>
 
     </div>

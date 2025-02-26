@@ -12,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const [email, setEmail] = useState("siddhesh.ss26@gmail.com");
-  const [password, setPassword] = useState("1234567");
+  const [password, setPassword] = useState("123456");
   const [logginLoader, setLoginLoader] = useState(false)
 
   const handleSubmit = (e) => {
@@ -29,7 +29,6 @@ const Login = () => {
     try {
       if(email && password) {
         const response = await login(body)
-        console.log("response", response)
         if(response.accessToken) {
           setCookies("auth", response.accessToken)
           dispatch(setIsAuthenticate(true))
