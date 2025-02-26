@@ -8,3 +8,7 @@ export const FORGOT_PASSWORD = '/auth/forgotPassword'
 // menu 
 export const MENU_UPDATE = "/menu/update"
 export const MENU_GET = "/menu/get"
+
+// restaurant
+export const RESTAURANT_UPDATE = "/restaurant/update"
+export const RESTAURANT_GET = "/restaurant/get"
