@@ -30,10 +30,13 @@ export default function YourMenu() {
   const [menus, setMenus] = useState({});
 
   useEffect(() => {
+    console.log("restaurantDetail", restaurantDetail)
     restaurantDetail.restaurantID && getMenu(restaurantDetail.restaurantID)
   }, [restaurantDetail])
 
   const getMenu = async (restaurantID) => {
+    console.log("restaurantID", restaurantID)
+
     setIsGetLoading(true)
     try {
       const response = await getMenuDetails({
@@ -223,7 +226,7 @@ export default function YourMenu() {
           variant="red"
           disabled={isSaveLoading}
           onClick={() => {
-            getMenu()
+            getMenu(restaurantDetail.restaurantID)
           }}
         >
           Undo
@@ -238,6 +241,7 @@ export default function YourMenu() {
         map(menus, (value, key) => {
           return (
             <MenuAccordion
+              key={key}
               menuTitle={key}
               menuItems={value}
               onMenuToggle={toggleMenu}

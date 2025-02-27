@@ -21,12 +21,11 @@ export const useJWTVerification = ( pathname) => {
       if(response) {
         dispatch(setIsAuthenticate(true))
         dispatch(setRestaurantDetails(response))
-        console.log("window.location.pathname", pathname)
+        // navigate('/dashboard/home')
         if(PROTECTED_ROUTE.indexOf(pathname) > -1) {
           navigate(pathname)
         } else {
           navigate('/dashboard/home')
-          
         }
       }
     } catch (error) {

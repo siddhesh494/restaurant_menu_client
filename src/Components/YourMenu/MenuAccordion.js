@@ -102,7 +102,7 @@ function MenuAccordion({
       <div>
         {map(menuItems.menuList, (list, category) => {
           return (
-            <div className='px-3 py-4'>
+            <div className='px-3 py-4' key={category}>
               <div className='flex flex-row justify-between mb-1 mr-5'>
                 {editCurrentCategory[category] ? (
                   <div className='flex flex-row justify-between mx-4 gap-2 mb-5'>
@@ -177,7 +177,7 @@ function MenuAccordion({
               {map(list, (dish, index) => {
                 return (
                   <Dish
-                    index={index}
+                    key={index}
                     dish={dish} 
                     category={category}
                     menuTitle={menuTitle}
