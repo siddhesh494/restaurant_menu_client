@@ -209,7 +209,7 @@ export default function YourMenu() {
     />
 
 
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-6 max-w-4xl mx-auto ">
       <div className='w-1/2 flex flex-row gap-2 ml-auto'>
         <Button
           size="md"

@@ -30,7 +30,7 @@ function Browse() {
 };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen ">
       {/* Main Content */}
       <main className="flex-1 p-10">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
