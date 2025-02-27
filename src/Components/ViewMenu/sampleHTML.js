@@ -129,7 +129,7 @@ export const CategoryHTML = ({
 }) => {
   return (
     <div class="mb-6">
-      <h2 class="text-xl font-semibold border-b-2 pb-2 mb-4 text-[#FF5722]">{categoryName}</h2>
+      <h2 class="text-2xl font-semibold border-b-2 pb-2 mb-4 text-[#FF5722]">{categoryName}</h2>
       <div class="space-y-4">
         {map(dishList, (dish) => {
           return (

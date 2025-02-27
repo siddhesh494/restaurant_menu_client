@@ -14,9 +14,9 @@ const Accordion = (props) => {
         className={props.classes?.accordionHead || `accordion-head`}
         onClick={props.handleOnClick}
       >
-        <span
-          className={props.classes?.accordionTitle || `accordion-title-style`}
-        >{props.title}</span>
+        <h1
+          className={props.classes?.accordionTitle || `accordion-title-style text-2xl font-semibold`}
+        >{props.title}</h1>
         <div className='flex flex-row gap-4'>
           {props.showDelete ? <img 
             src={DeleteIcon}

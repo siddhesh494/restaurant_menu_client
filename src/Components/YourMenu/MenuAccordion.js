@@ -93,7 +93,7 @@ function MenuAccordion({
       title = {menuTitle}
       isOpen={menuItems.isOpen}
       classes={{
-        accordionContainer: "my-5"
+        accordionContainer: "my-9"
       }}
       handleOnClick = {() => {
         onMenuToggle(menuTitle)
@@ -102,8 +102,8 @@ function MenuAccordion({
       <div>
         {map(menuItems.menuList, (list, category) => {
           return (
-            <div className='p-2'>
-              <div className='flex flex-row justify-between mb-3 mr-5'>
+            <div className='px-3 py-4'>
+              <div className='flex flex-row justify-between mb-1 mr-5'>
                 {editCurrentCategory[category] ? (
                   <div className='flex flex-row justify-between mx-4 gap-2 mb-5'>
                     <div className='w-[50%]'>
@@ -142,7 +142,7 @@ function MenuAccordion({
                   </div>
                 ) : (
                   <>
-                    <h2 className='font-semibold text-lg text-[#1E88E5]' >{category}</h2>
+                    <h2 className='font-semibold text-2xl text-[#FF5722]' >{category}</h2>
                     <div className='flex flex-row gap-1'>
                       <img 
                         src={EditIcon}
@@ -172,6 +172,8 @@ function MenuAccordion({
                 )}
                 
               </div>
+              <hr  className='py-1 '/>
+
               {map(list, (dish, index) => {
                 return (
                   <Dish
@@ -190,7 +192,7 @@ function MenuAccordion({
               {/* add new dish input section */}
               {
                 addDishEnable && addDishEnable[category] ?
-                <div className='my-5'>
+                <div className='py-3 bg-gray-50 rounded-lg shadow my-3'>
                   <InputDish
                     newDish={newDish}
                     setNewDish={setNewDish}
@@ -214,12 +216,11 @@ function MenuAccordion({
                   Add New Dish
                 </Button>
               </div> : null}
+            
             </div>
           )
         })}
         
-        <hr  className='py-2'/>
-
         {/* food category section */}
         {addCategoryEnable ? (
           <div className='flex flex-row justify-between mx-4 gap-2 mb-5'>

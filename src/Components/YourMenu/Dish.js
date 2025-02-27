@@ -34,67 +34,69 @@ function Dish({
   }
   return (
     <>
-    {dish.isEdit ? (
-      <InputDish
-        newDish = {dish}
-        setNewDish={editedDish}
-        disabledDish={undoEdit}
-        handleAddEditMenuItem={handleUpdateMenuItem}
-        menuTitle={menuTitle}
-        category={category}
-      />
-    ) : (
-
-    <div className='flex flex-row justify-between mx-4 my-1'>
-      <div className='flex flex-row gap-2 items-center'>
-        <div>
-          {dish.isVeg ? 
-            <img 
-              src={VegIcon}
-              alt='VegIcon'
-            /> :
-            <img 
-              src={NonVegIcon}
-              alt='NonVegIcon'
-            /> 
-          }
+    <div className='py-3 bg-gray-50 rounded-lg shadow my-3'>
+      {dish.isEdit ? (
+        <InputDish
+          newDish = {dish}
+          setNewDish={editedDish}
+          disabledDish={undoEdit}
+          handleAddEditMenuItem={handleUpdateMenuItem}
+          menuTitle={menuTitle}
+          category={category}
+        />
+      ) : (
+        <div className='flex flex-row justify-between mx-3 my-1 '>
+          <div className='flex flex-row gap-2 items-center'>
+            <div>
+              {dish.isVeg ? 
+                <img 
+                  src={VegIcon}
+                  alt='VegIcon'
+                /> :
+                <img 
+                  src={NonVegIcon}
+                  alt='NonVegIcon'
+                /> 
+              }
+            </div>
+            <div>
+              <p className='text-medium font-semibold'>{dish.dishName}</p>
+              <p className='text-gray-600 text-sm'>{dish.dishDescription}</p>
+            </div>
+          </div>
+          
+          <div className='flex flex-row gap-2 items-center'>
+            <div>
+              <p className='font-semibold'>₹{dish.dishPrice}</p>
+            </div>
+            <div className='flex flex-row gap-1'>
+              <img 
+                src={EditIcon}
+                alt="EditIcon"
+                className='cursor-pointer'
+                onClick={() => {
+                  handleOnEdit()
+                }}
+              />
+              <img 
+                src={DeleteIcon}
+                alt="DeleteIcon"
+                className='cursor-pointer'
+                onClick={() => {
+                  setShowDeleteDishModal(true)
+                  setSelectedDishForDelete({
+                    menuTitle: menuTitle,
+                    category: category,
+                    dishName: dish.dishName
+                  })
+                }}
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <p className='text-[#333333] font-medium'>{dish.dishName}</p>
-          <p className='text-[#333333] font-thin text-sm'>{dish.dishDescription}</p>
-        </div>
-      </div>
-      
-      <div className='flex flex-row gap-3 items-center'>
-        <div>
-          <p className='text-[#666666]'>{dish.dishPrice} Rs</p>
-        </div>
-        <div className='flex flex-row gap-1'>
-          <img 
-            src={EditIcon}
-            alt="EditIcon"
-            className='cursor-pointer'
-            onClick={() => {
-              handleOnEdit()
-            }}
-          />
-          <img 
-            src={DeleteIcon}
-            alt="DeleteIcon"
-            className='cursor-pointer'
-            onClick={() => {
-              setShowDeleteDishModal(true)
-              setSelectedDishForDelete({
-                menuTitle: menuTitle,
-                category: category,
-                dishName: dish.dishName
-              })
-            }}
-          />
-        </div>
-      </div>
+      )}
     </div>
-    )}
+    
     </>
   )
 }

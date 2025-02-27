@@ -257,7 +257,6 @@ export default function YourMenu() {
           )
         })
       )}
-      {!isGetLoading && <hr  className='py-2'/>}
 
       {/* add menu section */}
       {addMenuEnable ? (
