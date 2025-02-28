@@ -5,6 +5,7 @@ import { LogOut } from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCookie } from '../../utils/helper';
 import { setIsAuthenticate, setRestaurantDetails } from '../../store/userSlice';
+import toast from 'react-hot-toast';
 
 function RestaurantNavbar() {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ function RestaurantNavbar() {
     // navigate(0)
     dispatch(setIsAuthenticate(false))
     dispatch(setRestaurantDetails({}))
+    toast.success("Logged out!")
   }
 
   return (

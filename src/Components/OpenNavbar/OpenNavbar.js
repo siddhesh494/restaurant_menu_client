@@ -1,10 +1,35 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom'
 import Navbar from '../../UtilitiesComponents/Navbar'
-import { useJWTVerification } from '../../Hooks/useJWTVerification'
+import { useDispatch } from 'react-redux'
+import { setIsAuthenticate, setRestaurantDetails } from '../../store/userSlice'
+import { PROTECTED_ROUTE } from '../../utils/constant'
 
 function OpenNavbar() {
-  useJWTVerification()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const restaurant = useLoaderData(); 
+
+  useEffect(() => {
+    if(restaurant?.response?.data?.success === false) {
+      dispatch(setIsAuthenticate(false))
+      dispatch(setRestaurantDetails({}))
+      if(PROTECTED_ROUTE.indexOf(window.location.pathname) === -1) {
+        navigate(window.location.pathname)
+      } else {
+        navigate('/home')
+      }
+    } else {
+      dispatch(setIsAuthenticate(true))
+      dispatch(setRestaurantDetails(restaurant))
+      if(PROTECTED_ROUTE.indexOf(window.location.pathname) > -1) {
+        navigate(window.location.pathname)
+      } else {
+        navigate('/dashboard/home')
+      }
+    }
+  }, [])
+
   return (
     <div>
       <Navbar

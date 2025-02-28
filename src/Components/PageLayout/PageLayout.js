@@ -1,5 +1,5 @@
-import React from 'react'
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { createBrowserRouter, Navigate, RouterProvider, useNavigate } from 'react-router-dom'
 import Login from '../Login'
 import Home from '../Home'
 import Register from '../Register'
@@ -13,12 +13,23 @@ import ForgotPassword from '../ForgotPassword'
 import AuthGuard from '../../UtilitiesComponents/AuthGuard'
 import YourMenu from '../YourMenu'
 import MenuDesign from '../MenuDesign'
+import { verifyJWTToken } from '../../APIService/auth'
+
+const restaurantLoader = async ({ params }) => {
+  try {
+    const response = await verifyJWTToken()
+    return response;
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+};
 
 function PageLayout() {
-
   const appRouter = createBrowserRouter([
     {
       path: '/', /* it will have unprotected  */
+      loader: restaurantLoader,
       element: (
         <OpenNavbar />
       ),
@@ -58,6 +69,7 @@ function PageLayout() {
       element: (
         <AuthGuard />
       ),
+      loader: restaurantLoader,
       children: [
         { 
           index: true, 
@@ -88,9 +100,9 @@ function PageLayout() {
   ])
 
   return (
-    <div>
+    <Suspense fallback={<h1 className='text-3xl'>Loading...</h1>}>
       <RouterProvider router={appRouter} />
-    </div>
+    </Suspense>
   )
 }
 
