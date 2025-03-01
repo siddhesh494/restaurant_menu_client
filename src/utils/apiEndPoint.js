@@ -5,6 +5,7 @@ export const LOGIN = '/auth/login'
 export const REGISTER = '/auth/signUp'
 export const FORGOT_PASSWORD = '/auth/forgotPassword'
 export const VERIFY_EMAIL = '/auth/verifyEmail'
+export const SEND_EMAIL = '/auth/contactUs'
 
 // menu 
 export const MENU_UPDATE = "/menu/update"

@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-import { FORGOT_PASSWORD, LOGIN, REGISTER, VERIFY_EMAIL, VERIFY_JWT_TOKEN } from '../utils/apiEndPoint';
+import { FORGOT_PASSWORD, LOGIN, REGISTER, SEND_EMAIL, VERIFY_EMAIL, VERIFY_JWT_TOKEN } from '../utils/apiEndPoint';
 import { removeCookie } from '../utils/helper';
 import { instance } from './helper';
 
@@ -29,6 +29,12 @@ export const verifyEmail = async (body) => {
   const result = await instance.post(VERIFY_EMAIL, body, {})
   return result.data && result.data.message
 }
+
+export const sendEmail = async (body) => {
+  const result = await instance.post(SEND_EMAIL, body, {})
+  return result.data && result.data.message
+}
+
 
 export const logout = async () => {
   removeCookie("auth")

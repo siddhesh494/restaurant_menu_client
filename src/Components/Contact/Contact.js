@@ -1,10 +1,16 @@
 import { Mail } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InstagramIcon from '../../assests/PNG/Instagram.png'
 import LinkedinIcon from '../../assests/PNG/Linkedin.png'
+import { sendEmail } from "../../APIService/auth";
+import toast from "react-hot-toast";
+import Button from "../../UtilitiesComponents/Button/Button";
+import { forEach } from "lodash";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isLoading, setIsLoading] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,9 +18,32 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message Sent! We'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
   };
+
+  useEffect(() => {
+    let disabled = false
+    forEach(formData, (value) => {
+      if(!value) {
+        disabled = true
+      }
+    })
+
+    setIsDisabled(disabled)
+  }, [formData])
+
+  const contactUsFn = async () => {
+    setIsLoading(true)
+    try {
+      await sendEmail(formData)
+      toast.success(`Email Sent`)
+      setFormData({ name: "", email: "", message: "" })
+    } catch (error) {
+      console.log("error", error)
+      toast.error(`Error: ${error?.response?.data?.message || error.message}`)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -60,12 +89,16 @@ const Contact = () => {
                 required
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF5722]"
               ></textarea>
-              <button
+              <Button
                 type="submit"
-                className="w-full bg-[#FF5722] text-white py-3 rounded-md font-bold hover:bg-[#e64a19] transition"
+                disabled={isDisabled}
+                isLoading={isLoading}
+                onClick={() => {
+                  contactUsFn()
+                }}
               >
                 Send Message
-              </button>
+              </Button>
             </form>
           </div>
 
