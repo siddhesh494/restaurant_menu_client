@@ -12,6 +12,7 @@ function ViewMenu() {
   const [menus, setMenus] = useState({})
   const [pageViseMenu, setPageViseMenu] = useState(<h1>Loading</h1>)
   const [selectedMenu, setSelectedMenu] = useState(null)
+  const [restaurantName, setRestaurantName] = useState("")
 
   useEffect(() => {
     restaurantID && getMenu(restaurantID)
@@ -27,6 +28,9 @@ function ViewMenu() {
         restaurantID: restaurantID
       })
       if(response) {
+        if(response?.[0]?.restaurantName) {
+          setRestaurantName(response[0].restaurantName)
+        }
         const menuList = {}
         forEach(response, (menu) => {
           menuList[menu.menuName] = {
@@ -61,7 +65,7 @@ function ViewMenu() {
   }
 
   const generatePageViseContent = (selectedMenu) => {
-    const html = menuHTML({categoryList: selectedMenu.menuList})
+    const html = menuHTML({categoryList: selectedMenu.menuList, restaurantName: restaurantName})
     setPageViseMenu(html)
   }
 
