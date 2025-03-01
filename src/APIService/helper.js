@@ -1,8 +1,11 @@
 import axios from "axios"
 import { getCookie } from "../utils/helper";
+import baseURL from './baseURL.json'
+
+let appENV = process.env.REACT_APP_API_ENV || 'development'
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:4000/api/v1',
+  baseURL: baseURL[appENV].baseURL,
   headers: {
     authorization: `Bearer ${getCookie("auth")}`
   }
