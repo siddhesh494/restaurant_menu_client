@@ -1,12 +1,26 @@
 import { Link } from "react-router-dom";
 import { QrCode, CheckCircle, ShieldCheck, Users } from "lucide-react";
+import { Typewriter } from "react-simple-typewriter";
 
 const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Hero Section */}
       <section className="text-center py-16 bg-[#FF5722] text-white">
-        <h1 className="text-4xl font-bold">Welcome to ScanToDine</h1>
+      <h1 className="text-3xl md:text-4xl font-bold">
+        Welcome to{" "}
+        <span className="text-white">
+          <Typewriter
+            words={["ScanToDine"]}
+            loop={true}
+            cursor
+            cursorStyle="_"
+            typeSpeed={100}
+            deleteSpeed={50}
+            delaySpeed={2000}
+          />
+        </span>
+      </h1>
         <p className="text-lg mt-2 max-w-2xl mx-auto">
           Effortless QR-based digital menus for restaurants.
         </p>
@@ -67,7 +81,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="bg-white py-12 text-center">
+      {/* <section className="bg-white py-12 text-center">
         <h2 className="text-3xl font-bold text-gray-800">What Our Customers Say</h2>
         <div className="container mx-auto mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-gray-100 p-6 rounded-lg shadow-md">
@@ -83,7 +97,7 @@ const Home = () => {
             <h4 className="mt-4 font-bold">- Sarah P.</h4>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="text-center py-16 bg-[#FF5722] text-white">

@@ -1,11 +1,26 @@
 import { Users, CheckCircle, QrCode, ShieldCheck } from "lucide-react";
+import { Typewriter } from "react-simple-typewriter";
 
 const About = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Hero Section */}
       <section className="text-center py-16 bg-[#FF5722] text-white">
-        <h1 className="text-4xl font-bold">About ScanToDine</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">
+          About {" "}
+          <span className="text-white">
+            <Typewriter
+              words={["ScanToDine"]}
+              loop={true}
+              cursor
+              cursorStyle="_"
+              typeSpeed={100}
+              deleteSpeed={50}
+              delaySpeed={2000}
+            />
+          </span>
+        </h1>
+        {/* <h1 className="text-4xl font-bold">About ScanToDine</h1> */}
         <p className="text-lg mt-2 max-w-2xl mx-auto">
           Revolutionizing the dining experience with seamless QR code-based menus.
         </p>
@@ -64,14 +79,13 @@ const About = () => {
       </section>
 
       {/* Meet the Team Section */}
-      <section className="container mx-auto px-6 py-12 text-center">
+      {/* <section className="container mx-auto px-6 py-12 text-center">
         <h2 className="text-3xl font-bold text-gray-800">Meet Our Team</h2>
         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
           Passionate individuals committed to revolutionizing the dining experience.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {/* Team Member 1 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <img 
               src="https://via.placeholder.com/150" 
@@ -82,7 +96,6 @@ const About = () => {
             <p className="text-gray-600">Founder & CEO</p>
           </div>
 
-          {/* Team Member 2 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <img 
               src="https://via.placeholder.com/150" 
@@ -93,7 +106,6 @@ const About = () => {
             <p className="text-gray-600">CTO</p>
           </div>
 
-          {/* Team Member 3 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <img 
               src="https://via.placeholder.com/150" 
@@ -104,7 +116,7 @@ const About = () => {
             <p className="text-gray-600">Head of Operations</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="text-center py-6 bg-gray-200 text-gray-700">

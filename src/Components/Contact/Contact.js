@@ -1,5 +1,7 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useState } from "react";
+import InstagramIcon from '../../assests/PNG/Instagram.png'
+import LinkedinIcon from '../../assests/PNG/Linkedin.png'
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -71,25 +73,41 @@ const Contact = () => {
           <div className="bg-white p-8 shadow-md rounded-lg">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h2>
             <div className="space-y-4">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <Phone className="text-[#FF5722] mr-3" />
                 <p className="text-gray-700">+1 123 456 7890</p>
-              </div>
+              </div> */}
               <div className="flex items-center">
                 <Mail className="text-[#FF5722] mr-3" />
                 <p className="text-gray-700">support@scantodine.com</p>
               </div>
               <div className="flex items-center">
+                <img 
+                  alt="instagram"
+                  src={InstagramIcon}
+                  className="w-6 mr-3"
+                />
+                <p className="text-gray-700">scantodine</p>
+              </div>
+              <div className="flex items-center">
+                <img 
+                  alt="instagram"
+                  src={LinkedinIcon}
+                  className="w-6 mr-3"
+                />
+                <p className="text-gray-700">scantodine</p>
+              </div>
+              {/* <div className="flex items-center">
                 <MapPin className="text-[#FF5722] mr-3" />
                 <p className="text-gray-700">123 Main St, New York, NY 10001</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
 
       {/* Google Maps Embed (Optional) */}
-      <section className="container mx-auto px-6 py-12">
+      {/* <section className="container mx-auto px-6 py-12">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Find Us Here</h2>
         <div className="overflow-hidden rounded-lg shadow-md">
           <iframe
@@ -99,7 +117,7 @@ const Contact = () => {
             loading="lazy"
           ></iframe>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="text-center py-6 bg-gray-200 text-gray-700">

@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import RestaurantNavbar from '../../Components/RestaurantNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsAuthenticate, setRestaurantDetails } from '../../store/userSlice';
-import { PROTECTED_ROUTE } from '../../utils/constant';
+import { PROTECTED_ROUTE, UN_PROTECTED_ROUTE } from '../../utils/constant';
 
 function AuthGuard() {
   const isAuthenticated = useSelector((item) => item.user.isAuthenticate)
@@ -15,7 +15,7 @@ function AuthGuard() {
     if(restaurant?.response?.data?.success === false) {
       dispatch(setIsAuthenticate(false))
       dispatch(setRestaurantDetails({}))
-      if(PROTECTED_ROUTE.indexOf(window.location.pathname) > -1) {
+      if(UN_PROTECTED_ROUTE.indexOf(window.location.pathname) > -1) {
         navigate(window.location.pathname)
       } else {
         navigate('/home')
