@@ -2,14 +2,17 @@ import { Download } from 'lucide-react'
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+import baseURL from './../../APIService/baseURL.json'
+import toast from 'react-hot-toast';
+
 
 function Browse() {
+  let appENV = process.env.REACT_APP_API_ENV || 'development'
   const navigate = useNavigate();
-  // const [menuViews, setMenuViews] = useState(124); // Example count
   const restaurantDetail = useSelector(store => store.user.restaurantDetails)
 
   const downloadQR = async () => {
-    const url = `http://192.168.1.38:3000/viewMenu/${restaurantDetail.restaurantID}`
+    const url = `${baseURL[appENV].baseURL}/viewMenu/${restaurantDetail.restaurantID}`
     console.log("url", url)
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${url}&format=png`; // Dynamic format
     try {
@@ -27,7 +30,8 @@ function Browse() {
       // Clean up memory
       URL.revokeObjectURL(blobUrl);
   } catch (error) {
-      console.error("Error downloading QR code:", error);
+    toast.error("Error: Please try again later!")
+    console.error("Error downloading QR code:", error);
   }
 };
 
