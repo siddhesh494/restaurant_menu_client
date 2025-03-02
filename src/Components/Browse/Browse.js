@@ -12,7 +12,7 @@ function Browse() {
   const restaurantDetail = useSelector(store => store.user.restaurantDetails)
 
   const downloadQR = async () => {
-    const url = `${baseURL[appENV].baseURL}/viewMenu/${restaurantDetail.restaurantID}`
+    const url = `${baseURL[appENV].frontendURL}/viewMenu/${restaurantDetail.restaurantID}`
     console.log("url", url)
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${url}&format=png`; // Dynamic format
     try {
