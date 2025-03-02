@@ -1,11 +1,14 @@
 {
   "development": {
-    "baseURL": "http://localhost:4000/api/v1"
+    "baseURL": "http://localhost:4000/api/v1",
+    "frontendURL": "http://localhost:3000/"
   },
   "staging": {
-    "baseURL": ""
+    "baseURL": "https://restaurant-menu-server.onrender.com/api/v1",
+    "frontendURL": "http://192.168.1.38:3000/"
   },
   "production": {
-    "baseURL": ""
+    "baseURL": "",
+    "frontendURL": ""
   }
 }

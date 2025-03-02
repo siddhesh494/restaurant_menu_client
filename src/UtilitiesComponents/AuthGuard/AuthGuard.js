@@ -30,7 +30,7 @@ function AuthGuard() {
       }
     }
     
-  }, [])
+  }, [restaurant, dispatch, navigate])
 
   return isAuthenticated ? (
     <>

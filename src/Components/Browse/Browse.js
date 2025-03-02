@@ -9,7 +9,9 @@ function Browse() {
   const restaurantDetail = useSelector(store => store.user.restaurantDetails)
 
   const downloadQR = async () => {
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=http://192.168.1.36:3000/viewMenu/${restaurantDetail.restaurantID}&format=png`; // Dynamic format
+    const url = `http://192.168.1.38:3000/viewMenu/${restaurantDetail.restaurantID}`
+    console.log("url", url)
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${url}&format=png`; // Dynamic format
     try {
       const response = await fetch(qrUrl);
       const blob = await response.blob();

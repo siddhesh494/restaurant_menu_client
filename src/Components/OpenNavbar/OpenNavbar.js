@@ -28,7 +28,7 @@ function OpenNavbar() {
         navigate('/dashboard/home')
       }
     }
-  }, [])
+  }, [dispatch, navigate, restaurant])
 
   return (
     <div>

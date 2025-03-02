@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { createBrowserRouter, Navigate, RouterProvider, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Login from '../Login'
 import Home from '../Home'
 import Register from '../Register'

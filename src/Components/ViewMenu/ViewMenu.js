@@ -14,13 +14,19 @@ function ViewMenu() {
   const [selectedMenu, setSelectedMenu] = useState(null)
   const [restaurantName, setRestaurantName] = useState("")
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const generatePageViseContent = (selectedMenu) => {
+    const html = menuHTML({categoryList: selectedMenu.menuList, restaurantName: restaurantName})
+    setPageViseMenu(html)
+  }
+
   useEffect(() => {
     restaurantID && getMenu(restaurantID)
   }, [restaurantID])
 
   useEffect(() => {
     selectedMenu && generatePageViseContent(selectedMenu)
-  }, [selectedMenu])
+  }, [selectedMenu, generatePageViseContent])
 
   const getMenu = async (restaurantID) => {
     try {
@@ -62,11 +68,6 @@ function ViewMenu() {
       console.log("error", error)
       toast.error(`Error: ${error?.response?.data?.message || error.message}`)
     }
-  }
-
-  const generatePageViseContent = (selectedMenu) => {
-    const html = menuHTML({categoryList: selectedMenu.menuList, restaurantName: restaurantName})
-    setPageViseMenu(html)
   }
 
   const selectMenuFn = (menuTitle) => {

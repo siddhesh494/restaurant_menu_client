@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import { FORGOT_PASSWORD, LOGIN, REGISTER, SEND_EMAIL, VERIFY_EMAIL, VERIFY_JWT_TOKEN } from '../utils/apiEndPoint';
 import { removeCookie } from '../utils/helper';
 import { instance } from './helper';
