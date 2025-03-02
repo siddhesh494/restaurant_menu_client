@@ -30,7 +30,8 @@ function AuthGuard() {
       }
     }
     
-  }, [restaurant, dispatch, navigate])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return isAuthenticated ? (
     <>

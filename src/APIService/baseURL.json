@@ -4,7 +4,7 @@
     "frontendURL": "http://localhost:3000/"
   },
   "staging": {
-    "baseURL": "https://restaurant-menu-server.onrender.com/api/v1",
+    "baseURL": "https://scantodine-menu.onrender.com/api/v1",
     "frontendURL": "http://192.168.1.38:3000/"
   },
   "production": {

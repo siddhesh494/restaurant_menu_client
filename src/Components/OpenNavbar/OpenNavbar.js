@@ -28,7 +28,8 @@ function OpenNavbar() {
         navigate('/dashboard/home')
       }
     }
-  }, [dispatch, navigate, restaurant])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div>
